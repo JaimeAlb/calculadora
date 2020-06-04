@@ -7,20 +7,26 @@ miFrame.pack()
 operacion=""
 
 
-numero=StringVar()
-
 cuadro1=StringVar()
+
+cuadro2=StringVar()
+
+cuadro3=StringVar()
 
 
 #++++++++++++++++++++++PANTALLA++++++++++++++++++++++++++++++++++
 
 
-cuadroTexto=Entry(miFrame, textvariable=numero)
+cuadroTexto=Entry(miFrame, textvariable=cuadro1)
 cuadroTexto.grid(row=0, column=0, pady=10, padx=0, columnspan=4)
 cuadroTexto.config(fg="black", justify="right")
 
-cuadroTexto2=Entry(miFrame, textvariable=cuadro1)
+cuadroTexto2=Entry(miFrame, textvariable=cuadro2)
 cuadroTexto2.grid(row=5, column=0, pady=10, padx=0, columnspan=4)
+cuadroTexto2.config(fg="black", justify="right")
+
+cuadroTexto2=Entry(miFrame, textvariable=cuadro3)
+cuadroTexto2.grid(row=6, column=0, pady=10, padx=0, columnspan=4)
 cuadroTexto2.config(fg="black", justify="right")
 
 
@@ -35,30 +41,40 @@ def codigo(num):
     global operacion
      
     if operacion!="":
-        numero.set(num)
+        cuadro1.set(num)
         operacion=""
              
     else:
-        numero.set(numero.get()+num)
+        cuadro1.set(cuadro1.get()+num)
 
 def suma(Get):
 
     global operacion
     global var1
+    proceso()
           
     operacion="suma"
     
     var1=int(Get)+var1  #var1=int(numero.get())+var1  
-    cuadro1.set(var1)
-    
+    cuadro2.set(var1)
+       
     print(var1+1-1)
 
 def enter():
     global var1
-
-    cuadro1.set(var1+int(numero.get()))
-    var1=int(cuadro1.get())
     
+
+    cuadro2.set(var1+int(cuadro1.get()))
+    var1=int(cuadro2.get())
+
+def proceso():
+    global var1
+    lista=[]
+    cuadro3.set(var1)
+    lista.append(var1)
+    print(lista)
+    
+
 
 
        
@@ -96,7 +112,7 @@ boton0.grid(row=4, column=1,  pady=5, padx=5)
 botonEnter=Button(miFrame, text="Enter", width=3, command=lambda:enter())
 botonEnter.grid(row=4, column=2, pady=5, padx=5)
 
-botonSuma=Button(miFrame, text="+", width=3, command=lambda:suma(numero.get()))
+botonSuma=Button(miFrame, text="+", width=3, command=lambda:suma(cuadro1.get()))
 botonSuma.grid(row=1, column=3, pady=5, padx=5)
 
 """
