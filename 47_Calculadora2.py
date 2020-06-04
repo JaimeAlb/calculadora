@@ -28,8 +28,7 @@ cuadroTexto2.config(fg="black", justify="right")
 
 
 var1=0
-var2=0
-var3=0
+
 
 def codigo(num):
 
@@ -50,15 +49,16 @@ def suma(Get):
     operacion="suma"
     
     var1=int(Get)+var1  #var1=int(numero.get())+var1  
-    numero.set(var1)
+    cuadro1.set(var1)
     
     print(var1+1-1)
 
 def enter():
     global var1
 
-    numero.set(var1+int(numero.get()))
-    var1=0
+    cuadro1.set(var1+int(numero.get()))
+    var1=int(cuadro1.get())
+    
 
 
        
