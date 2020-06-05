@@ -4,82 +4,79 @@ raiz.title("Calculadora")
 miFrame=Frame(raiz)
 miFrame.pack()
 
+photo= PhotoImage(file="C:\Curso Python\calculadora\gato.PNG")
+labelphoto= Label(raiz, image = photo)
+labelphoto.pack()
+
+#++++++++++++++++++++++++VARIABLES++++++++++++++++++++++++++
+
 operacion=""
-
-
-cuadro1=StringVar()
-
-cuadro2=StringVar()
-
-cuadro3=StringVar()
-
+var1=0
+lista=[]
+contador=0
 
 #++++++++++++++++++++++PANTALLA++++++++++++++++++++++++++++++++++
 
+cuadro1=StringVar()
+cuadro2=StringVar()
+cuadro3=StringVar()
 
 cuadroTexto=Entry(miFrame, textvariable=cuadro1)
 cuadroTexto.grid(row=0, column=0, pady=10, padx=0, columnspan=4)
 cuadroTexto.config(fg="black", justify="right")
 
 cuadroTexto2=Entry(miFrame, textvariable=cuadro2)
-cuadroTexto2.grid(row=5, column=0, pady=10, padx=0, columnspan=4)
-cuadroTexto2.config(fg="black", justify="right")
-
-cuadroTexto2=Entry(miFrame, textvariable=cuadro3)
 cuadroTexto2.grid(row=6, column=0, pady=10, padx=0, columnspan=4)
 cuadroTexto2.config(fg="black", justify="right")
 
+cuadroTexto2=Entry(miFrame, textvariable=cuadro3)
+cuadroTexto2.grid(row=5, column=0, pady=10, padx=0, columnspan=4)
+cuadroTexto2.config(fg="black", justify="right")
 
 #++++++++++++++++++++++FUNCIONES BOTONES++++++++++++++++++++++++++++++++
 
-
-var1=0
-
-
 def codigo(num):
-
-    global operacion
-     
+    global operacion    
     if operacion!="":
         cuadro1.set(num)
-        operacion=""
-             
+        operacion=""             
     else:
         cuadro1.set(cuadro1.get()+num)
 
 def suma(Get):
-
     global operacion
     global var1
-    proceso()
           
-    operacion="suma"
-    
+    operacion="suma"    
     var1=int(Get)+var1  #var1=int(numero.get())+var1  
-    cuadro2.set(var1)
-       
+    cuadro2.set(var1)       
     print(var1+1-1)
+    proceso()    
 
 def enter():
-    global var1
-    
+    global var1   
+    global lista 
 
     cuadro2.set(var1+int(cuadro1.get()))
     var1=int(cuadro2.get())
 
+    lista.append(cuadro1.get())
+    cuadro3.set(lista)  
+
 def proceso():
     global var1
-    lista=[]
-    cuadro3.set(var1)
-    lista.append(var1)
-    print(lista)
+    global lista
+    global contador
     
-
-
-
-       
-
-   
+    if contador==0:
+        lista.append(str(var1)+"+")
+        cuadro3.set(lista)
+        contador+=1
+    else:
+        lista.append(str(cuadro1.get())+"+")
+        cuadro3.set(lista)      
+ 
+     
 #++++++++++++++++++++++++++++++++++BOTONES GUI++++++++++++++++++++++++++++++
 
 boton1=Button(miFrame, text="1", width=3, command=lambda:codigo("1"))
@@ -108,7 +105,6 @@ botonPunto.grid(row=4, column=0, pady=5, padx=5)
 boton0=Button(miFrame, text="0", width=3, command=lambda:codigo("0"))
 boton0.grid(row=4, column=1,  pady=5, padx=5)
 
-
 botonEnter=Button(miFrame, text="Enter", width=3, command=lambda:enter())
 botonEnter.grid(row=4, column=2, pady=5, padx=5)
 
@@ -124,7 +120,5 @@ botonDiv=Button(miFrame, text="/", width=3)
 botonDiv.grid(row=4, column=3, pady=5, padx=5)
 
 """
-
-
 
 raiz.mainloop()
