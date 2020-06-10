@@ -1,5 +1,3 @@
-# pass: f+oY5**v3}Q}
-#!/usr/bin/python
 import MySQLdb
 
 db = MySQLdb.connect(host="academiachicureo.cl",
@@ -16,6 +14,6 @@ cur.execute("SELECT * FROM usuarios")
 
 # print all the first cell of all the rows
 for row in cur.fetchall():
-    print row
+    print (row)
 
 db.close()
