@@ -30,7 +30,7 @@ edadEtiqueta=Label(miFrame, text="Ingresa edad")
 edadEtiqueta.grid(row=2, column=0)
 #*********BBDD*****************
 lista=[]
-#miCursor.execute("CREATE TABLE POSTULANTES (NOMBRE VARCHAR (50), APELLIDO VARCHAR (50), EDAD INTEGER (20))")
+#miCursor.execute("CREATE TABLE POSTULANTES (ID INTEGER PRIMARY KEY AUTOINCREMENT, NOMBRE VARCHAR (50), APELLIDO VARCHAR (50), EDAD INTEGER (20))")
 
 #***********FUNCIONES*****************
 nombre="asd"
@@ -50,7 +50,6 @@ def guardar_nombre():
     etiqueta2.grid(row=8, columnspan=3)
     lista.append((nombre, apellido, edad))
     print(lista)
-
  
 def borrar():
     global nombre
@@ -65,7 +64,7 @@ def borrar():
     nombreCuadro.focus() #permite colocar el cursor en el entry que uno quiera
 
 def guardar():
-    miCursor.executemany("INSERT INTO POSTULANTES VALUES(?,?,?)", lista)
+    miCursor.executemany("INSERT INTO POSTULANTES VALUES(NULL,?,?,?)", lista)
     
 #miCursor.executemany("INSERT INTO POSTULANTES VALUES(?,?,?)", lista)
 #****************BOTONES**********************
@@ -78,8 +77,5 @@ boton3=Button(miFrame, text="Guardar", width=20, command=guardar)
 boton3.grid(row=7, columnspan=3, pady=5, padx=5)
 
 root.mainloop()
-
 miConexion.commit()
-
-
 miConexion.close()
