@@ -5,7 +5,7 @@ miCursor=miConexion.cursor()
 
 root=Tk()
 root.title("Libreta")
-root.geometry("300x400+700+100")
+root.geometry("330x500+700+100")
 miFrame=Frame(root)
 miFrame.pack()
 
@@ -26,7 +26,7 @@ apellidoEtiqueta.grid(row=1, column=0)
 cuadro3=StringVar()
 edadCuadro=Entry(miFrame, textvariable=cuadro3)
 edadCuadro.grid(row=2, column=1, pady=5, padx=5)
-edadCuadro.config(show="*") #muestra en el el cuadro *** pero se guarda el valor real en la bd
+#edadCuadro.config(show="*") #muestra en el el cuadro *** pero se guarda el valor real en la bd
 edadEtiqueta=Label(miFrame, text="Ingresa edad")
 edadEtiqueta.grid(row=2, column=0)
 
@@ -36,6 +36,25 @@ selectCuadro.grid(row=8, columnspan=3, pady=15, padx=5)
 scrollVert=Scrollbar(miFrame, command=selectCuadro.yview)
 scrollVert.grid(row=8, column=2, sticky="nsew")
 selectCuadro.config(yscrollcommand=scrollVert.set)
+
+cuadro4=StringVar()
+editarNombre=Entry(miFrame, width=15, textvariable=cuadro4)
+editarNombre.grid(row=9, column=0, pady=5, padx=1)
+nombreeditEtiqueda=Label(miFrame, text="Edita nombre")
+nombreeditEtiqueda.grid(row=10, column=0)
+
+cuadro5=StringVar()
+editarApellido=Entry(miFrame, width=15, textvariable=cuadro5)
+editarApellido.grid(row=9, column=1, pady=5, padx=1)
+apellidoeditEtiqueta=Label(miFrame, text="Edita apellido")
+apellidoeditEtiqueta.grid(row=10, column=1)
+
+cuadro6=StringVar()
+editarEdad=Entry(miFrame, width=15, textvariable=cuadro6)
+editarEdad.grid(row=9, column=2, pady=5, padx=1)
+edadeditEtiqueta=Label(miFrame, text="Edita edad")
+edadeditEtiqueta.grid(row=10, column=2)
+
 #*********BBDD*****************
 
 lista=[]
@@ -94,17 +113,54 @@ def delete():
         z=y[0]
         texto="DELETE FROM POSTULANTES WHERE ID= :pin"
         miCursor.execute(texto, {'pin':z})
+
+
+def editar():
+    pinchados=selectCuadro.curselection()
+    for x in pinchados:
+        y=selectCuadro.get(x)
+        nombreParaEditar=y[1]
+        apellidoParaEditar=y[2]
+        edadParaEditar=y[3]
+
+        cuadro4.set(nombreParaEditar)
+        cuadro5.set(apellidoParaEditar)
+        cuadro6.set(edadParaEditar)
+        
+
+def update():
+    pinchado=selectCuadro.curselection()
+    y=selectCuadro.get(pinchado)
+    nombreParaEditar=editarNombre.get()
+    apellidoParaEditar=editarApellido.get()
+    edadParaEditar=int(editarEdad.get())
+    idseleccionado= y[0]
+
+    print(idseleccionado)
+    print(nombreParaEditar)
+    print(apellidoParaEditar)
+    print(edadParaEditar)
     
+    tex1="UPDATE POSTULANTES SET NOMBRE= :name WHERE ID= :idi"
+    miCursor.execute(tex1, {'name':nombreParaEditar, 'idi':idseleccionado})
+    tex2="UPDATE POSTULANTES SET APELLIDO= :ape WHERE ID= :idi"
+    miCursor.execute(tex2, {'ape':apellidoParaEditar, 'idi':idseleccionado})
+    tex3="UPDATE POSTULANTES SET EDAD= :ed WHERE ID= :idi"
+    miCursor.execute(tex3, {'ed':edadParaEditar, 'idi':idseleccionado})     
 #****************BOTONES**********************
 
 boton1=Button(miFrame, text="Enter", width=20, command=guardar_nombre)
 boton1.grid(row=3, columnspan=3, pady=5, padx=5)
 boton2=Button(miFrame, text="Limpiar", width=20, command=limpiar)
 boton2.grid(row=4, columnspan=3, pady=5, padx=5)
-boton3=Button(miFrame, text="Guardar", width=20, command=guardar)
+boton3=Button(miFrame, text="Guardar/Mostrar", width=20, command=guardar)
 boton3.grid(row=5, columnspan=3, pady=5, padx=5)
 boton4=Button(miFrame, text="Delete", width=20, command=delete)
 boton4.grid(row=6, columnspan=3, pady=5, padx=5)
+boton5=Button(miFrame, text="Editar", width=20, command=editar)
+boton5.grid(row=11, columnspan=3, pady=5, padx=5)
+boton6=Button(miFrame, text="Update", width=20, command=update)
+boton6.grid(row=12, columnspan=3, pady=5, padx=5)
 
 root.mainloop()
 miConexion.commit()
